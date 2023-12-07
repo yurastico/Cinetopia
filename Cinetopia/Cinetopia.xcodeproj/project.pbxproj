@@ -14,6 +14,7 @@
 		C52FE0212B21899C0071D7CE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C52FE01F2B21899C0071D7CE /* LaunchScreen.storyboard */; };
 		C52FE0292B2197190071D7CE /* MoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52FE0282B2197190071D7CE /* MoviesViewController.swift */; };
 		C5E10BCF2B22547000FBBC2C /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E10BCE2B22547000FBBC2C /* Movie.swift */; };
+		C5E10BD42B22573100FBBC2C /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E10BD32B22573100FBBC2C /* MovieTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		C52FE0222B21899C0071D7CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C52FE0282B2197190071D7CE /* MoviesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesViewController.swift; sourceTree = "<group>"; };
 		C5E10BCE2B22547000FBBC2C /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		C5E10BD32B22573100FBBC2C /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 				C5E10BD12B2254E700FBBC2C /* Models */,
 				C5E10BD02B22547F00FBBC2C /* ViewControllers */,
 				C52FE0142B21899B0071D7CE /* AppDelegate.swift */,
+				C5E10BD22B22570F00FBBC2C /* Cells */,
 				C52FE0162B21899B0071D7CE /* SceneDelegate.swift */,
 				C52FE01D2B21899C0071D7CE /* Assets.xcassets */,
 				C52FE01F2B21899C0071D7CE /* LaunchScreen.storyboard */,
@@ -84,6 +87,14 @@
 				C5E10BCE2B22547000FBBC2C /* Movie.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		C5E10BD22B22570F00FBBC2C /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				C5E10BD32B22573100FBBC2C /* MovieTableViewCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -158,6 +169,7 @@
 			files = (
 				C52FE0192B21899B0071D7CE /* HomeViewController.swift in Sources */,
 				C52FE0152B21899B0071D7CE /* AppDelegate.swift in Sources */,
+				C5E10BD42B22573100FBBC2C /* MovieTableViewCell.swift in Sources */,
 				C52FE0172B21899B0071D7CE /* SceneDelegate.swift in Sources */,
 				C52FE0292B2197190071D7CE /* MoviesViewController.swift in Sources */,
 				C5E10BCF2B22547000FBBC2C /* Movie.swift in Sources */,
