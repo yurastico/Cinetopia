@@ -20,6 +20,8 @@ class MoviesViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = .clear
         tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "nameCell")
         return tableView
     }()
 
@@ -69,7 +71,20 @@ extension MoviesViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: "nameCell", for: indexPath)
+        //cell.textLabel?.text = names[indexPath.row] -- vai ser depreciado
+        var configuration = cell.defaultContentConfiguration()
+        configuration.text = names[indexPath.row]
+        configuration.textProperties.color = .white
+        cell.contentConfiguration = configuration
+        cell.backgroundColor = .clear
+        
         return cell
+    }
+}
+
+extension MoviesViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
