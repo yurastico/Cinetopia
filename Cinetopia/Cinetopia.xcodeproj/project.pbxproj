@@ -40,7 +40,6 @@
 		C52FE0082B21899B0071D7CE = {
 			isa = PBXGroup;
 			children = (
-				C52FE0282B2197190071D7CE /* MoviesViewController.swift */,
 				C52FE0132B21899B0071D7CE /* Cinetopia */,
 				C52FE0122B21899B0071D7CE /* Products */,
 			);
@@ -58,6 +57,7 @@
 			isa = PBXGroup;
 			children = (
 				C52FE0142B21899B0071D7CE /* AppDelegate.swift */,
+				C52FE0282B2197190071D7CE /* MoviesViewController.swift */,
 				C52FE0162B21899B0071D7CE /* SceneDelegate.swift */,
 				C52FE0182B21899B0071D7CE /* HomeViewController.swift */,
 				C52FE01D2B21899C0071D7CE /* Assets.xcassets */,
