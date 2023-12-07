@@ -17,7 +17,7 @@ class MoviesViewController: UIViewController {
         tableView.backgroundColor = .clear
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "movieCell")
+        tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: "movieCell")
         return tableView
     }()
 
@@ -67,14 +67,12 @@ extension MoviesViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath)
-        //cell.textLabel?.text = names[indexPath.row] -- vai ser depreciado
-        var configuration = cell.defaultContentConfiguration()
-        configuration.text = movies[indexPath.row].title
-        configuration.textProperties.color = .white
-        cell.contentConfiguration = configuration
-        cell.backgroundColor = .clear
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath) as? MovieTableViewCell else { fatalError() }
         
+        //cell.textLabel?.text = names[indexPath.row] -- vai ser depreciado
+        
+        cell.configureCell(movie: movies[indexPath.row])
+        cell.selectionStyle = .none
         return cell
     }
 }
@@ -82,5 +80,11 @@ extension MoviesViewController: UITableViewDataSource {
 extension MoviesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let movieDetailViewController = MovieDetailViewController(movie: movies[indexPath.row])
+        navigationController?.pushViewController(movieDetailViewController, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 160
     }
 }
