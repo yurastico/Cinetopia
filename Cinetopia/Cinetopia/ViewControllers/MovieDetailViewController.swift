@@ -30,9 +30,6 @@ class MovieDetailViewController: UIViewController {
         imageView.layer.cornerRadius = 32
         imageView.layer.masksToBounds = true
         
-        
-        
-        
         return imageView
     
     }()
