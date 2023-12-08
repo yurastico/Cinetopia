@@ -12,6 +12,7 @@ class MoviesViewController: UIViewController {
     private var filteredMovies: [Movie] = []
     private var isSearchActive = false
     private let movieService = MovieService()
+    var movies: [Movie] = []
    
     private lazy var searchBar: UISearchBar = {
         let bar = UISearchBar()
@@ -46,7 +47,15 @@ class MoviesViewController: UIViewController {
     
     
     private func fetchMovies() {
-        
+        movieService.getMovies() { movies in
+            print(movies)
+            guard let movies else { return }
+            self.movies = movies
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+            
+        }
     }
     
     private func setupNavigationBar() {
