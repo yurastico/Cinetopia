@@ -8,6 +8,10 @@
 import UIKit
 
 class MoviesViewController: UIViewController {
+    
+    private var filteredMovies: [Movie] = []
+    private var isSearchActive = false
+    private let movieService = MovieService()
    
     private lazy var searchBar: UISearchBar = {
         let bar = UISearchBar()
@@ -18,8 +22,6 @@ class MoviesViewController: UIViewController {
         return bar
     }()
     
-    private var filteredMovies: [Movie] = []
-    private var isSearchActive = false
     
     private lazy var tableView: UITableView  = {
         let tableView = UITableView()
@@ -37,12 +39,15 @@ class MoviesViewController: UIViewController {
         setupNavigationBar()
         addSubviews()
         setupContraints()
+        fetchMovies()
 
         // Do any additional setup after loading the view.
     }
     
     
-    
+    private func fetchMovies() {
+        
+    }
     
     private func setupNavigationBar() {
         title = "Filmes Populares"
@@ -53,6 +58,7 @@ class MoviesViewController: UIViewController {
         navigationItem.setHidesBackButton(true, animated: true)
         navigationItem.titleView = searchBar
     }
+    
     
     private func addSubviews() {
         view.addSubview(tableView)
@@ -112,3 +118,4 @@ extension MoviesViewController: UISearchBarDelegate {
         tableView.reloadData()
     }
 }
+
