@@ -42,12 +42,23 @@ class MoviesViewController: UIViewController {
         setupNavigationBar()
         addSubviews()
         setupContraints()
-        fetchMovies()
-
+        Task {
+            await fetchMovies()
+        }
+        
         // Do any additional setup after loading the view.
     }
     
-    
+    //forma async (eh a que esta sendo usada)
+    private func fetchMovies() async {
+        do {
+            movies = try await movieService.getMovies()
+            tableView.reloadData()
+        } catch (let error ) {
+            print(error)
+        }
+    }
+    //forma com completion, (nao esta sendo usado)
     private func fetchMovies() {
         movieService.getMovies() { result in
             
