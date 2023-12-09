@@ -7,6 +7,8 @@
 
 import UIKit
 
+
+
 class MoviesViewController: UIViewController {
     
     private var filteredMovies: [Movie] = []
@@ -47,13 +49,20 @@ class MoviesViewController: UIViewController {
     
     
     private func fetchMovies() {
-        movieService.getMovies() { movies in
-            print(movies)
-            guard let movies else { return }
-            self.movies = movies
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+        movieService.getMovies() { result in
+            
+            switch result {
+            case .success(let movies):
+                DispatchQueue.main.async {
+                    self.movies = movies
+                    self.tableView.reloadData()
+                }
+            case .failure(let error):
+                print(error)
             }
+          
+            
+           
             
         }
     }
