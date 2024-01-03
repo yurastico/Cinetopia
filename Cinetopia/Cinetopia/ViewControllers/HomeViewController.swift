@@ -50,7 +50,7 @@ class HomeViewController: UIViewController {
     
     
     @objc private func buttonPressed() {
-        navigationController?.pushViewController(MoviesViewController(), animated: true)
+        navigationController?.pushViewController(TabBarController(), animated: true)
     }
     
     private lazy var stackView: UIStackView = {
