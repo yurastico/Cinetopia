@@ -12,10 +12,13 @@ class FavoriteMoviesViewController: UIViewController {
     // MARK: - UIComponents
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 20, left: 26, bottom: 10, right: 26)
         let collection = UICollectionView(frame: .zero,collectionViewLayout: layout)
-        collection.backgroundColor = .yellow
+        collection.backgroundColor = .clear
         collection.translatesAutoresizingMaskIntoConstraints = false
-        
+        collection.register(FavoriteMovieCollectionViewCell.self, forCellWithReuseIdentifier: "FavoriteMovieCollectionViewCell")
+        collection.dataSource = self
+        collection.delegate = self
         return collection
     }()
     
@@ -43,6 +46,28 @@ class FavoriteMoviesViewController: UIViewController {
         ])
     }
 }
+
+extension FavoriteMoviesViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FavoriteMovieCollectionViewCell", for: indexPath) as? FavoriteMovieCollectionViewCell else { fatalError() }
+        
+        cell.setupView(Movie(id: 1, title: "teste", image: "a", synopsis: "a mamada reluzente", rate: 5, releaseDate: "ontem"))
+        
+        return cell
+    }
+    
+}
+
+extension FavoriteMoviesViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width / 3, height: 200)
+    }
+}
+
 
 #Preview {
     FavoriteMoviesViewController()

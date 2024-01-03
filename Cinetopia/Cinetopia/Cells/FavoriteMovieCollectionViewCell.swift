@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FavoriteMovieViewController: UICollectionViewCell {
+class FavoriteMovieCollectionViewCell: UICollectionViewCell {
 
     // MARK: - UIComponents
   
@@ -25,10 +25,10 @@ class FavoriteMovieViewController: UICollectionViewCell {
     private lazy var movieTitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 18.0,weight: .medium)
-        label.textColor = .black
+        label.font = .systemFont(ofSize: 20.0,weight: .bold)
+        label.textColor = .white
         label.textAlignment = .center
-        label.numberOfLines = 0
+        label.numberOfLines = 1
         
         return label
     }()
