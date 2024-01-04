@@ -8,7 +8,13 @@
 import UIKit
 import Kingfisher
 
+protocol MovieTableViewCellDelegate: AnyObject {
+    func didSelectFavoriteButton(sender: UIButton)
+}
+
 class MovieTableViewCell: UITableViewCell {
+    
+    weak var delegate: MovieTableViewCellDelegate?
     
     private lazy var moviePosterImageView: UIImageView = {
         let imageView = UIImageView()
@@ -41,9 +47,9 @@ class MovieTableViewCell: UITableViewCell {
     private lazy var favoriteButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        let iconImage = UIImage(systemName: "heart.fill")?.withTintColor(.buttonBackground,renderingMode: .alwaysOriginal)
+        let iconImage = UIImage(systemName: "heart")?.withTintColor(.buttonBackground,renderingMode: .alwaysOriginal)
         button.setImage(iconImage, for: .normal)
-//        button.addTarget(self, action: #selector(didTapFavoriteButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTapFavoriteButton), for: .touchUpInside)
         return button
     }()
     
@@ -68,7 +74,7 @@ class MovieTableViewCell: UITableViewCell {
         addSubview(moviePosterImageView)
         addSubview(movieTitlelabel)
         addSubview(movieReleaseDate)
-        addSubview(favoriteButton)
+        contentView.addSubview(favoriteButton)
     }
     private func setupConstraints() {
         NSLayoutConstraint.activate([
@@ -83,9 +89,11 @@ class MovieTableViewCell: UITableViewCell {
             movieTitlelabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             movieReleaseDate.topAnchor.constraint(equalTo: movieTitlelabel.bottomAnchor, constant: 8),
             movieReleaseDate.leadingAnchor.constraint(equalTo: moviePosterImageView.trailingAnchor,constant: 16),
+            
             favoriteButton.topAnchor.constraint(equalTo: movieReleaseDate.bottomAnchor, constant: 8),
-            favoriteButton.leadingAnchor.constraint(equalTo: moviePosterImageView.leadingAnchor,constant: 16),
+            favoriteButton.leadingAnchor.constraint(equalTo: moviePosterImageView.trailingAnchor,constant: 16),
             favoriteButton.heightAnchor.constraint(equalToConstant: 25),
+            
             favoriteButton.widthAnchor.constraint(equalToConstant: 25),
         ])
     }
@@ -110,6 +118,10 @@ class MovieTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    @objc func didTapFavoriteButton(sender: UIButton) {
+        delegate?.didSelectFavoriteButton(sender: sender)
     }
 
 }

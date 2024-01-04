@@ -22,9 +22,9 @@ class MovieManager {
         favoriteMovies.append(movie)
     }
      
-    private func remove(_ movie: Movie) {
+    func remove(_ movie: Movie) {
         if let index = favoriteMovies.firstIndex(where: {$0.id == movie.id}) {
-            favoriteMovies.remove(at: index)
+            favoriteMovies.remove(at: index )
         }
     }
     

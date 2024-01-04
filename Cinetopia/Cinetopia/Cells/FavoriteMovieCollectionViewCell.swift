@@ -7,8 +7,14 @@
 
 import UIKit
 
+protocol FavoriteMovieCollectionViewCellDelegate: AnyObject {
+    func didTapFavoriteButton(sender: UIButton)
+}
+
 class FavoriteMovieCollectionViewCell: UICollectionViewCell {
 
+    weak var delegate: FavoriteMovieCollectionViewCellDelegate?
+    
     // MARK: - UIComponents
   
     
@@ -87,7 +93,7 @@ class FavoriteMovieCollectionViewCell: UICollectionViewCell {
     }
     // MARK: - IBAction
     @objc func didTapFavoriteButton(_ sender: UIButton) {
-        print("oiiii")
+        delegate?.didTapFavoriteButton(sender: sender)
     }
 }
 

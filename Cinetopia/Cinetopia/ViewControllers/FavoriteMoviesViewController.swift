@@ -33,6 +33,11 @@ class FavoriteMoviesViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        collectionView.reloadData()
+    }
+    
     // MARK - Class Methods
 
     private func addSubviews() {
@@ -51,14 +56,14 @@ class FavoriteMoviesViewController: UIViewController {
 
 extension FavoriteMoviesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return MovieManager.shared.favoriteMovies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FavoriteMovieCollectionViewCell", for: indexPath) as? FavoriteMovieCollectionViewCell else { fatalError() }
-        
-        cell.setupView(Movie(id: 1, title: "teste", image: "a", synopsis: "a mamada reluzente", rate: 5, releaseDate: "ontem"))
-        
+        cell.delegate = self
+        let currentMovie = MovieManager.shared.favoriteMovies[indexPath.item]
+        cell.setupView(currentMovie)
         return cell
     }
     
@@ -86,6 +91,19 @@ extension FavoriteMoviesViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+extension FavoriteMoviesViewController: FavoriteMovieCollectionViewCellDelegate {
+    func didTapFavoriteButton(sender: UIButton) {
+        guard let cell = sender.superview as? FavoriteMovieCollectionViewCell else { return }
+        guard let indexPath = collectionView.indexPath(for: cell) else { return }
+        let selectedMovie = MovieManager.shared.favoriteMovies[indexPath.item]
+        selectedMovie.changeSelectionStatus()
+        
+        MovieManager.shared.remove(selectedMovie)
+        collectionView.reloadData()
+    }
+    
+    
+}
 
 #Preview {
     FavoriteMoviesViewController()
