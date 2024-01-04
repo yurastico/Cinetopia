@@ -38,18 +38,37 @@ class MovieTableViewCell: UITableViewCell {
         return label
     }()
     
+    private lazy var favoriteButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        let iconImage = UIImage(systemName: "heart.fill")?.withTintColor(.buttonBackground,renderingMode: .alwaysOriginal)
+        button.setImage(iconImage, for: .normal)
+//        button.addTarget(self, action: #selector(didTapFavoriteButton), for: .touchUpInside)
+        return button
+    }()
+    
     func configureCell(movie: Movie) {
         movieTitlelabel.text = movie.title
         let url = URL(string: movie.image)
         moviePosterImageView.kf.setImage(with: url)
         
         movieReleaseDate.text = "Lançamento: \(movie.releaseDate)"
+        
+        let heart = UIImage(systemName: "heart")?.withTintColor(.buttonBackground,renderingMode: .alwaysOriginal)
+        let heartFill = UIImage(systemName: "heart.fill")?.withTintColor(.buttonBackground,renderingMode: .alwaysOriginal)
+        if movie.isSelected ?? false {
+            favoriteButton.setImage(heartFill, for: .normal)
+        } else {
+            favoriteButton.setImage(heart, for: .normal)
+        }
+        
     }
 
     private func addSubviews() {
         addSubview(moviePosterImageView)
         addSubview(movieTitlelabel)
         addSubview(movieReleaseDate)
+        addSubview(favoriteButton)
     }
     private func setupConstraints() {
         NSLayoutConstraint.activate([
@@ -63,7 +82,11 @@ class MovieTableViewCell: UITableViewCell {
             movieTitlelabel.leadingAnchor.constraint(equalTo: moviePosterImageView.trailingAnchor,constant: 16),
             movieTitlelabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             movieReleaseDate.topAnchor.constraint(equalTo: movieTitlelabel.bottomAnchor, constant: 8),
-            movieReleaseDate.leadingAnchor.constraint(equalTo: moviePosterImageView.trailingAnchor,constant: 16)
+            movieReleaseDate.leadingAnchor.constraint(equalTo: moviePosterImageView.trailingAnchor,constant: 16),
+            favoriteButton.topAnchor.constraint(equalTo: movieReleaseDate.bottomAnchor, constant: 8),
+            favoriteButton.leadingAnchor.constraint(equalTo: moviePosterImageView.leadingAnchor,constant: 16),
+            favoriteButton.heightAnchor.constraint(equalToConstant: 25),
+            favoriteButton.widthAnchor.constraint(equalToConstant: 25),
         ])
     }
     
