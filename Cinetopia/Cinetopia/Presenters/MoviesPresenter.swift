@@ -24,7 +24,8 @@ final class MoviesPresenter: MoviesPresenterToViewControllerProtocol {
     
     private var controller: MoviesViewControllerToPresenterProtocol?
     private var view: MoviesViewProtocol?
-    private let movieService = MovieService()
+    private var interactor: MoviesPresenterToInteractorProtocol?
+    
     
     
     func setViewController(_ viewController: MoviesViewControllerToPresenterProtocol) {
@@ -33,8 +34,9 @@ final class MoviesPresenter: MoviesPresenterToViewControllerProtocol {
 
 
     
-    init(view: MoviesViewProtocol) {
+    init(view: MoviesViewProtocol, interactor: MoviesPresenterToInteractorProtocol) {
         self.view = view
+        self.interactor = interactor
     }
     
     //MARK: - MoviesPresenterToViewControllerProtocol
@@ -51,36 +53,16 @@ final class MoviesPresenter: MoviesPresenterToViewControllerProtocol {
     
     
     //MARK: - Class Methods
-    //forma async (eh a que esta sendo usada)
     private func fetchMovies() async {
         do {
-            let movies = try await movieService.getMovies()
+            guard let movies = try await interactor?.fetchMovies() else { return }
             view?.setupView(with: movies)
-           view?.reloadData()
-        } catch (let error ) {
+            view?.reloadData()
+        } catch (let error) {
             print(error)
         }
     }
-    //forma com completion, (nao esta sendo usado)
-    private func fetchMovies() {
-        movieService.getMovies() { result in
-            
-            switch result {
-            case .success(let movies):
-                DispatchQueue.main.async {
-                    //self.movies = movies
-                    self.view?.setupView(with: movies)
-                    self.view?.reloadData()
-                }
-            case .failure(let error):
-                print(error)
-            }
-          
-            
-           
-            
-        }
-    }
+
 }
 
 extension MoviesPresenter: MoviesPresenterToViewProtocol {
