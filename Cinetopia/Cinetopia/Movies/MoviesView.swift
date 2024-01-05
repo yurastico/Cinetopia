@@ -13,6 +13,7 @@ protocol MoviesViewProtocol: AnyObject {
     func navigateToMoviesDetail(movie: Movie)
     func reloadRow(at indexPath: IndexPath)
     func toggle(_ isActive: Bool)
+    func setPresenter(_ presenter: MoviesPresenterToViewProtocol)
 }
 
 class MoviesView: UIView {
@@ -99,8 +100,7 @@ extension MoviesView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let movie = isSearchActive ? filteredMovies[indexPath.row] : movies[indexPath.row]
-        let movieDetailViewController = MovieDetailViewController(movie: movie)
-        //navigationController?.pushViewController(movieDetailViewController, animated: true)
+        presenter?.didSelect(movie: movie)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -131,7 +131,9 @@ extension MoviesView: MoviesViewProtocol {
     }
     
     func reloadData() {
-        tableView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
+        }
     }
     
     func navigateToMoviesDetail(movie: Movie) {
@@ -145,6 +147,9 @@ extension MoviesView: MoviesViewProtocol {
     func toggle(_ isActive: Bool) {
         self.isSearchActive = isActive
     }
+    func setPresenter(_ presenter: MoviesPresenterToViewProtocol) {
+           self.presenter = presenter
+       }
     
     
 }

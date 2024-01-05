@@ -20,9 +20,27 @@ protocol MoviesPresenterToViewProtocol: AnyObject {
 }
 
 final class MoviesPresenter: MoviesPresenterToViewControllerProtocol {
+    
+    private var controller: MoviesViewControllerToPresenterProtocol?
+    private var view: MoviesViewProtocol?
+    private let movieService = MovieService()
+    
+    
+    func setViewController(_ viewController: MoviesViewControllerToPresenterProtocol) {
+            self.controller = viewController
+        }
+
+    
+    init(view: MoviesViewProtocol) {
+        self.view = view
+    }
+    
     //MARK: - MoviesPresenterToViewControllerProtocol
     func viewDidLoad() {
-        
+        view?.setPresenter(self)
+        Task {
+            await fetchMovies()
+        }
     }
     
     func viewDidAppear() {
@@ -30,6 +48,37 @@ final class MoviesPresenter: MoviesPresenterToViewControllerProtocol {
     }
     
     
+    //MARK: - Class Methods
+    //forma async (eh a que esta sendo usada)
+    private func fetchMovies() async {
+        do {
+            let movies = try await movieService.getMovies()
+            view?.setupView(with: movies)
+           view?.reloadData()
+        } catch (let error ) {
+            print(error)
+        }
+    }
+    //forma com completion, (nao esta sendo usado)
+    private func fetchMovies() {
+        movieService.getMovies() { result in
+            
+            switch result {
+            case .success(let movies):
+                DispatchQueue.main.async {
+                    //self.movies = movies
+                    self.view?.setupView(with: movies)
+                    self.view?.reloadData()
+                }
+            case .failure(let error):
+                print(error)
+            }
+          
+            
+           
+            
+        }
+    }
 }
 
 extension MoviesPresenter: MoviesPresenterToViewProtocol {
@@ -38,11 +87,11 @@ extension MoviesPresenter: MoviesPresenterToViewProtocol {
     }
     
     func didSelectFavoriteButton(_ movie: Movie) {
-        <#code#>
+            
     }
     
     func didSearchText(_ searchBar: UISearchBar, textDidChange searchText: String, _ movies: [Movie], _ filteredMovies: [Movie]) {
-        <#code#>
+        
     }
     
     
