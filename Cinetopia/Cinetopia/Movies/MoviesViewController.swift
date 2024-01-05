@@ -35,6 +35,7 @@ class MoviesViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter?.setViewController(self)
         presenter?.viewDidLoad()
         setupNavigationBar()
         
@@ -59,26 +60,10 @@ class MoviesViewController: UIViewController {
         navigationItem.titleView = mainView?.searchBar
     }
     
-    
-    
-     
-     
-
 }
 
 
 
-//extension MoviesViewController: UISearchBarDelegate {
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        if searchText.isEmpty {
-//            isSearchActive = false
-//        } else {
-//            isSearchActive = true
-//            filteredMovies = movies.filter { $0.title.lowercased().contains(searchText.lowercased()) }
-//        }
-//        tableView.reloadData()
-//    }
-//}
-//
+
 
 
