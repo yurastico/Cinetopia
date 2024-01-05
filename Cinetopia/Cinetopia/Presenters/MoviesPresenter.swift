@@ -10,6 +10,7 @@ import UIKit
 protocol MoviesPresenterToViewControllerProtocol: AnyObject {
     func viewDidLoad()
     func viewDidAppear()
+    func setViewController(_ viewController: MoviesViewControllerToPresenterProtocol)
 }
 
 protocol MoviesPresenterToViewProtocol: AnyObject {
@@ -29,6 +30,7 @@ final class MoviesPresenter: MoviesPresenterToViewControllerProtocol {
     func setViewController(_ viewController: MoviesViewControllerToPresenterProtocol) {
             self.controller = viewController
         }
+
 
     
     init(view: MoviesViewProtocol) {
@@ -83,7 +85,7 @@ final class MoviesPresenter: MoviesPresenterToViewControllerProtocol {
 
 extension MoviesPresenter: MoviesPresenterToViewProtocol {
     func didSelect(movie: Movie) {
-        controller?.didSelect(movie: Movie)
+        controller?.didSelectMovie(movie)
     }
     
     func didSelectFavoriteButton(_ movie: Movie) {

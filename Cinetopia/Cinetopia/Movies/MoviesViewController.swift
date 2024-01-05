@@ -8,7 +8,7 @@
 import UIKit
 
 protocol MoviesViewControllerToPresenterProtocol: AnyObject {
-    
+    func didSelectMovie(_ movie: Movie)
 }
 
 class MoviesViewController: UIViewController {
@@ -36,6 +36,7 @@ class MoviesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter?.setViewController(self)
+        
         presenter?.viewDidLoad()
         setupNavigationBar()
         
@@ -62,7 +63,12 @@ class MoviesViewController: UIViewController {
     
 }
 
-
+extension MoviesViewController: MoviesViewControllerToPresenterProtocol {
+    func didSelectMovie(_ movie: Movie) {
+        let detailsVielController = MovieDetailViewController(movie: movie)
+        navigationController?.pushViewController(detailsVielController, animated: true)
+    }
+}
 
 
 
